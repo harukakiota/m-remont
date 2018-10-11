@@ -15,7 +15,6 @@ require 'php/service/appenv.php';
 // and static variables such as text come from here
 require 'php/service/static.php';
 require 'php/DataBase.php';
-require 'php/service/validate-mailer.php';
 require 'php/service/xlsxwriter.class.php';
 
 $config = [
