@@ -1,0 +1,1 @@
+﻿DROP DATABASE `remont_db`;

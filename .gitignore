@@ -1,0 +1,12 @@
+.vscode/
+site-definition/
+vendor/
+appenv.php
+sql/**
+
+!sql/remontDB_create_DB.sql
+!sql/remontDB_drop_DB.sql
+!sql/remontDB_insert_all_data.sql
+
+files/*
+TODO

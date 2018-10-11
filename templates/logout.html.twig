@@ -1,0 +1,44 @@
+{% from "form-input-field.html.twig" import form_input_field as user_input %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Партнёрский портал М-Ремонт: Регистрация</title>
+    <script src="{{ base_url() }}/templates/script/lib/jquery-3.2.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ base_url() }}/templates/style/lib/bootstrap.min.css" />
+    <script src="{{ base_url() }}/templates/script/lib/bootstrap.min.js"></script>
+
+    <!-- hack to pass twig vars through -->
+    <script type="text/javascript">
+        document.routeContainer = document.routeContainer || {};
+        document.routeContainer.register = "{{ path_for('register') }}";
+        document.routeContainer.login = "{{ path_for('login') }}";
+        document.routeContainer.redirect = "{{ redirect }}";
+    </script>
+
+    <script src="{{ base_url() }}/templates/script/lib/jquery.validate.min.js"></script>
+    <script src="{{ base_url() }}/templates/script/register.js"></script>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12 col-sm-offset-3 col-sm-6">
+                <div class="panel panel-danger">
+                    <div class="panel-heading"><p class="panel-title">Выход из системы</p></div>
+                    <div class="panel-body">
+                        <h4>Вы успешно вышли из системы.</h4><br/>
+                        <h4>Для входа в систему пройдите по <a href="{{ path_for('login') }}">этой ссылке</a>.</h4>
+                    </div>
+                </div>                    
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,76 @@
+{% from "form-input-field.html.twig" import form_input_field as deal_input %}
+
+<div class="modal fade" id="newDealModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4>Создание новой сделки</h4>
+            </div>
+            <div class="modal-body">
+                <form method="POST" class="form-horizontal" id="new-deal-form">
+                    {% if deal_owner_id %}
+                    <input type="hidden" class="hidden" name="deal_owner_id" value="{{deal_owner_id}}" />
+                    <div class="alert alert-info">
+                        <h5>Владелец создаваемой сделки: {{ deal_owner_data['fullname']}} (<a href="mailto://{{deal_owner_data['email']}}">{{deal_owner_data['email']}}</a>)</h5>
+                    </div>
+                    {% endif %}
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <h4>Данные клиента</h4>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12 col-sm-4">
+                            {{ deal_input('surname', 'Фамилия', true) }}
+                        </div>
+                        <div class="col-xs-12 col-sm-4">
+                            {{ deal_input('name', 'Имя', true) }}
+                        </div>
+                        <div class="col-xs-12 col-sm-4">
+                            {{ deal_input('father-name', 'Отчество') }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12 col-sm-6">
+                            {{ deal_input('phone', 'Телефон', true) }}
+                        </div>
+                        <div class="col-xs-12 col-sm-6">
+                            {{ deal_input('email', 'E-mail', true) }}
+                        </div>
+                    </div>
+                    <hr >
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <h4>Данные сделки</h4>
+                        </div>
+                    </div>
+                    <div class="form-group">                        
+                        <div class="col-xs-12 col-sm-6">
+                            {{ deal_input('address', 'Адрес объекта', true) }}
+                        </div>
+                        <div class="col-xs-6 col-sm-3">
+                            {{ deal_input('area', 'Площадь', true, 'number') }}
+                        </div>
+                        <div class="col-xs-6 col-sm-3">
+                            {{ deal_input('rooms_number', 'Кол-во комнат', true, 'number') }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            {{ deal_input('comments', 'Комментарии', true, 'textarea') }}
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-default" data-dismiss="modal">Назад</button>
+                        <button class="btn btn-success" id="btn-submit-new-deal">Сохранить</button>
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</div>

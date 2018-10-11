@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Партнёрский портал М-Ремонт</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ base_url() }}/templates/style/lib/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ base_url() }}/templates/style/lib/font-awesome-4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ base_url() }}/templates/style/lib/fileinput.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ base_url() }}/templates/style/lib/explorer-fa-theme.min.css">
+    
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ base_url() }}/templates/style/index.css" />
+    
+    <script src="{{ base_url() }}/templates/script/lib/jquery-3.2.1.min.js"></script>
+    <script src="{{ base_url() }}/templates/script/lib/bootstrap.min.js"></script>
+    <script src="{{ base_url() }}/templates/script/lib/fileinput.min.js"></script>
+    <script src="{{ base_url() }}/templates/script/lib/fileinput-lang-ru.js"></script>
+    <script src="{{ base_url() }}/templates/script/lib/explorer-fa-theme.min.js"></script>
+    <script src="{{ base_url() }}/templates/script/lib/jquery.validate.min.js"></script>
+
+    <script src="{{ base_url() }}/templates/script/index.js"></script> 
+    {% if current_deal %}
+    <script src="{{ base_url() }}/templates/script/deal.js"></script>
+    {% elseif account %}
+    <script src="{{ base_url() }}/templates/script/account.js"></script>
+    {% elseif accounts %}
+    <script src="{{ base_url() }}/templates/script/accounts.js"></script>
+    {% endif %}
+
+    {% if user_type != 'user' %}
+    <script src="{{ base_url() }}/templates/script/admin.js"></script>
+    {% endif %}    
+
+    <script type="text/javascript">
+        document.twigContainer = document.twigContainer || {};
+        document.twigContainer.dealCreate = "{{ path_for('deal-create') }}";
+        {% if current_deal %}    
+        document.twigContainer.postFile = "{{ path_for('post-deal-file', {'deal_id':current_deal['id']}) }}";
+        document.twigContainer.dealStatusPost = "{{ path_for('deal-post-status', {'deal_id':current_deal['id']}) }}";
+        document.twigContainer.dealEdit = "{{ path_for('deal-edit', {'deal_id':current_deal['id']}) }}";
+        document.twigContainer.dealFilePreview = "{{ filePreviewConfig }}";
+        {% endif %}
+        {% if user_type != 'user' %}
+        document.twigContainer.dealDelete = "{{ path_for('deal-delete', {'deal_id':current_deal['id']}) }}";
+        {% endif %}
+        {% if accounts %}
+            document.twigContainer.statistics = "{{ path_for('statistics') }}";
+        {% endif %}    
+    </script>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row row-eq-height" id="top">
+            <div class="col-sm-3">
+                <img id="main-logo" src="{{ base_url() }}/templates/img/logo.jpg" alt="М-Ремонт" class="img-rounded img-responsive">
+            </div>
+            <div class="col-sm-9" id="nav-top">
+                <div class="row row-bottom">
+                    <div class="col-sm-6">
+                        <div class="btn-toolbar">
+                            <div class="btn-group btn-group-lg" data-toggle="buttons">
+                                <label class="btn btn-default {{ account or accounts or help ? "disabled" : "active"}}">
+                                    <input type="radio" name="btn-deal" id="btn-deal-data" autocomplete="off">Данные сделки</input>
+                                </label>
+                                <label class="btn btn-default {{ account or accounts or help ? "disabled" : ""}}">
+                                    <input type="radio" name="btn-deal" id="btn-deal-files" autocomplete="off">Файлы сделки</input>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="btn-group btn-group-lg pull-right">
+                            {% if user_type == "admin" or user_type == "superadmin" %}
+                            <a class="btn btn-default" href="{{ path_for('account-list') }}" id="btn-user-account">Все аккаунты</a>
+                            {% endif %}
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-lg btn-default dropdown-toggle" data-toggle="dropdown">Инструменты <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a class="{{ account|default(false) ? "active" : ""}}"  href="{{ path_for('home') }}" id="btn-account">Ваш аккаунт</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ path_for('help') }}" id="btn-help">Помощь</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ path_for('logout') }}">Выход</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- navigation row and body -->
+        <div class="row" id="body">
+            <div class="col-sm-3">
+                <div class="btn-group-vertical btn-group-lg btn-block" role="group">
+                    <button type="button" class="btn btn-default btn-toggle" data-type="new" id="btn-new-deals">Новые сделки</button>
+                    <div class="btn-group-vertical btn-block btn-dropdown-group" role="group">
+                        {% if deal_data.new|length > 0 %}
+                            {% for d in deal_data.new %}
+                            <a class="btn {{ current_deal['id']|default('-1') == d.deal_id ? "btn-primary" : "btn-default"}}" href="{{ path_for('get-deal', {'deal_id':d.deal_id, 'user_id':deal_owner_id}) }}">{{d.name~' '~d.surname~", сделка №"~d.deal_id}}</a>
+                            {% endfor %}
+                        {% else %}
+                            <button type="button" class="btn btn-default">Сделок не найдено!</button>
+                        {% endif %}
+                    </div>
+                    <button type="button" class="btn btn-default btn-toggle" data-type="current" id="btn-current-deals">Активные сделки</button>
+                    <div class="btn-group-vertical btn-block btn-dropdown-group" role="group">
+                        {% if deal_data.current|length > 0 %}
+                            {% for d in deal_data.current %}
+                            <a class="btn {{ current_deal['id']|default('-1') == d.deal_id ? "btn-primary" : "btn-default"}}" href="{{ path_for('get-deal', {'deal_id':d.deal_id, 'user_id':deal_owner_id}) }}">{{d.name~' '~d.surname~", сделка №"~d.deal_id}}</a>
+                            {% endfor %}
+                        {% else %}
+                            <button type="button" class="btn btn-default">Сделок не найдено!</button>
+                        {% endif %}
+                    </div>
+                    <button type="button" class="btn btn-default btn-toggle" data-type="archive" id="btn-archive-deals">Закрытые сделки</button>
+                    <div class="btn-group-vertical btn-block btn-dropdown-group" role="group">
+                        {% if deal_data.archive|length > 0 %}
+                            {% for d in deal_data.archive %}
+                            <a class="btn {{ current_deal['id']|default('-1') == d.deal_id ? "btn-primary" : "btn-default"}}" href="{{ path_for('get-deal', {'deal_id':d.deal_id, 'user_id':deal_owner_id}) }}">{{d.name~' '~d.surname~", сделка №"~d.deal_id}}</a>
+                            {% endfor %}
+                        {% else %}
+                            <button type="button" class="btn btn-default">Сделок не найдено!</button>
+                        {% endif %}
+                    </div>
+                </div>
+                {% if (user_type == 'user') or deal_owner_id %}
+                <button class="btn btn-lg btn-success" id="btn-new-deal" data-toggle="modal" data-target="#newDealModal" title="Новая сделка">+</button>
+                {% endif %}
+            </div>
+            <div class="col-sm-9">
+                <div id="content-container" class="container-fluid tab-content">
+                    {% if help %}
+                    <div class="row">
+                        {% include "help.html.twig" %}
+                    </div>
+                    {% else %}
+                        {% if account|default(false) %}
+                        <div class="row">
+                            {% include "account.html.twig" %}
+                        </div>
+                        {% elseif accounts|default(false) %}
+                        <div class="row">
+                            {% include "account-list.html.twig" %}
+                        </div>
+                        {% else %}
+                        <div class="row tab-pane active" id="tab-deal-data">
+                            {% include "deal.html.twig" %}
+                        </div>
+                        <div class="row tab-pane" id="tab-deal-files">
+                            {% include "files.html.twig" %}                        
+                        </div>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if (user_type == 'user') or deal_owner_id %}
+        {% include "deal-form-modal.html.twig" %}
+        {% include "deal-edit-form-modal.html.twig" %}
+    {% endif %}
+</body>
+
+</html>

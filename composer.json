@@ -1,0 +1,9 @@
+{
+    "require": {
+        "slim/slim": "^3.8",
+        "firebase/php-jwt": "dev-master",
+        "twig/twig": "1.35",
+        "slim/twig-view": "^2.3",
+        "phpmailer/phpmailer": "^6.0"
+    }
+}

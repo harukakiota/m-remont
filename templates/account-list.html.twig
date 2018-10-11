@@ -1,0 +1,61 @@
+<!-- uploaded files and form are shown in the same window -->
+<div class="row">
+    <div class="col-sm-12">
+        <ul class="nav nav-tabs" id="account-tabs">
+            <li role="presentation" class="active"><a href="#active-accounts">Активные аккаунты</a></li>
+            <li role="presentation"><a href="#inactive-accounts">Деактивированные аккаунты</a></li>
+            <li role="presentation"><a href="#data-export">Экспорт информации</a></li>
+        </ul>
+        <div class="panel panel-default tab-content">
+            {% set table_id = "active-accounts" %}
+            {% for account_list in accounts %}
+            <div class="tab-pane {{ table_id == "active-accounts" ? 'active' }}" id="{{ table_id }}">
+                <table role="tabpanel" class="table">
+                    <thead>
+                        <tr>
+                            <th>№</th>
+                            <th>ФИО</th>
+                            <th>Электронная почта</th>
+                            <th>Просмотреть</th>
+                            <th>Статистика</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for account in account_list %}
+                        <tr>
+                            <th scope="row">{{ account['user_id'] }}</th>
+                            <td>{{ account['surname']~' '~account['name']~' '~account['father_name'] }}</td>
+                            <td>{{ account['email'] }}</td>
+                            <td>
+                                {% if user_id == account['user_id'] %}
+                                    <a class="btn btn-sm btn-success" href="{{ path_for('home') }}">Просмотреть</a>
+                                {% elseif user_type == 'superadmin' or (user_type == 'admin' and account['type'] == 'user') %}
+                                    <a class="btn btn-sm btn-success" href="{{ path_for('edit-account', {'user_id' : account['user_id']}) }}">Просмотреть</a>
+                                {% endif %}
+                            </td>
+                            <td><a class="btn btn-sm btn-default" href="{{ path_for('statistics', {'user_id' :  account['user_id']}) }}">Получить</a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% set table_id = "inactive-accounts"%}            
+            {% endfor %}
+            <div class="tab-pane" id="data-export">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="btn-group btn-group-lg">
+                            <a class="btn btn-default" href="{{ path_for('statistics') }}">Загрузить полную статистику</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+$('#account-tabs a').click(function (e) {
+    e.preventDefault();
+    $(this).tab('show');
+});
+</script>

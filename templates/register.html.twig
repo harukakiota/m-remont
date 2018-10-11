@@ -1,0 +1,112 @@
+{% from "form-input-field.html.twig" import form_input_field as user_input %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Партнёрский портал М-Ремонт: Регистрация</title>
+    <script src="{{ base_url() }}/templates/script/lib/jquery-3.2.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ base_url() }}/templates/style/lib/bootstrap.min.css" />
+    <script src="{{ base_url() }}/templates/script/lib/bootstrap.min.js"></script>
+
+    <!-- hack to pass twig vars through -->
+    <script type="text/javascript">
+        document.routeContainer = document.routeContainer || {};
+        document.routeContainer.register = "{{ path_for('register') }}";
+        document.routeContainer.login = "{{ path_for('login') }}";
+        document.routeContainer.redirect = "{{ redirect }}";
+    </script>
+
+    <script src="{{ base_url() }}/templates/script/lib/jquery.validate.min.js"></script>
+    <script src="{{ base_url() }}/templates/script/register.js"></script>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12 col-sm-offset-3 col-sm-6">
+                {% if valid_email %}
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3>Партнёрский портал М-Ремонт</h3>
+                    </div>
+                    <div class="panel-body">
+                        <h4>Данные пользователя</h4>
+                        <hr />
+                        <form id="registration-form" class="form-horizontal">
+                            <input class="form-control" type="hidden" id="email" name="email" value="{{ email }}"/>
+                            <div class="form-group">
+                                <label for="email" class="control-label col-sm-3">Email</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="email" id="showemail" required="required" disabled value="{{ email }}"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="password" class="control-label col-sm-3">Пароль</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="password" id="password" name="password" required="required" minlength="8"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="passwordconfirm" class="control-label col-sm-3">Повторите пароль</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="password" id="passwordconfirm" name="passwordconfirm" required="required" minlength="8"/>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="form-group">
+                                <label for="surname" class="control-label col-sm-3">Фамилия</label>
+                                <div class="col-sm-9">
+                                    {{ user_input('surname', 'Фамилия', true) }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="name" class="control-label col-sm-3">Имя</label>
+                                <div class="col-sm-9">
+                                    {{ user_input('name', 'Имя', true) }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="father_name" class="control-label col-sm-3">Отчество</label>
+                                <div class="col-sm-9">
+                                    {{ user_input('father_name', 'Отчество', true) }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone" class="control-label col-sm-3">Телефон</label>
+                                <div class="col-sm-9">
+                                    {{ user_input('phone', '', true, "tel") }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <div class="alert hidden" role="alert">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-8 col-sm-4">
+                                    <button class="btn btn-block btn-success" id="btn-registration-submit">Завершить</label>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                {% else %}
+                <div class="panel panel-danger">
+                    <div class="panel-heading">Ошибка</div>
+                    <div class="panel-body">
+                        <h4>{{ reason }}</h4>
+                    </div>
+                </div>                    
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

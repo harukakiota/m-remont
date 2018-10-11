@@ -1,0 +1,69 @@
+<div class="well">
+<div class="row">
+        <div class="col-sm-12">
+            <div class="row">
+                <div class="col-sm-4">
+                    <strong>ФИО: </strong><span id="client-name-static">{{current_deal['surname']}} {{current_deal['name']}} {{current_deal['father_name']|default('')}}</span><br/>
+                    <strong>Адрес: </strong><span>{{ current_deal['address'] }}</span><br/>
+                </div>
+                <div class="col-sm-4">
+                    <strong>Электронная почта: </strong><span>{{current_deal['client_email']|default('')}}</span><br/>
+                    <strong>Телефон: </strong><span>{{ current_deal['phone'] }}</span><br/>
+                </div>
+                <div class="col-sm-4">
+                    <div class="btn-group pull-right">
+                        <button class="btn btn-success" id="btn-edit-deal" data-toggle="modal" data-target="#editDealModal">Изменение</button>
+                        {% if current_deal['status'] < 4 %}
+                        <button class="btn btn-warning" id="btn-cancel-deal" data-status="9">Отказ от сделки</button>
+                        {% endif %}
+                        {% if user_type != 'user' %}
+                        <button class="btn btn-danger" id="btn-delete-deal" value="{{ current_deal['id'] }}">Удаление</button>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <hr />
+        </div>
+        <div class="col-sm-12">
+            <div class="row">
+                <div class="col-sm-4">
+                    <strong>Количество комнат: </strong><span>{{ current_deal['rooms_number']|default('--') }}</span><br/>
+                    <strong>Площадь (кв.м.): </strong><span>{{ current_deal['square_m']|default('--') }}</span><br/>
+                </div>
+                <div class="col-sm-4">
+                    <strong>Срок сдачи: </strong><span>{{ current_deal['date']|default('--') }}</span><br/>
+                    <strong>Ожидаемая комиссия: </strong><span>{{ current_deal['commission'] ? current_deal['commission']~' руб.' : '--' }}</span><br/>
+                </div>
+                <div class="col-sm-4">
+                    <p><strong>Комментарий: </strong>{{ current_deal['commentary']|default('--') }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        {% if current_deal['status'] < 8 %}
+        <div class="row pntr-row">
+            <!-- IMPORTANT: check for correct status here -->
+            {% set deal_range = current_deal['status'] < 4 ? range(1, 4) : range(5, 8) %}
+            {% for step in deal_range %}
+            <div class="col-sm-3">
+                <div class="pntr {{ user_type != 'user' ? 'pntr-responsive' }} {{ step <= current_deal['status'] ? 'pntr-success'}}" data-status="{{ step }}"></div>
+                <div class="center-block">                
+                    <h4 class="center-block {{ step <= current_deal['status'] ? 'text-success'}}">{{ status_labels[step] }}</h4>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% elseif current_deal['status'] == 8 %}
+        <div class="alert alert-success">
+            <h4 class="center-block">Работа над сделкой завершена.</h4>
+        </div>
+        {% elseif current_deal['status'] == 9 %}
+        <div class="alert alert-danger">
+            <h4 class="center-block">Клиент отказался от сделки.</h4>
+        </div>
+        {% endif %}
+    </div>
+</div>

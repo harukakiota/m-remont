@@ -1,0 +1,7 @@
+{% macro form_input_field(id, placeholder, required = false, type = 'text', value = "") %}
+{% if type == 'textarea' %}
+    <textarea class="form-control" rows="3" type="{{ type }}" name="{{ id }}" placeholder="{{ placeholder }}" value="{{ value }}"></textarea>
+{% else %}
+    <input class="form-control" type="{{ type }}" name="{{ id }}" placeholder="{{ placeholder }}" {{required ? 'required="required"'}}  value="{{ value }}"/>
+{% endif %}
+{% endmacro %}

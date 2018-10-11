@@ -1,0 +1,82 @@
+{% from "form-input-field.html.twig" import form_input_field as deal_input %}
+
+<div class="modal fade" id="editDealModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4>Изменение сделки</h4>
+            </div>
+            <div class="modal-body">
+                <form method="POST" class="form-horizontal" id="edit-deal-form">
+                    {% if deal_owner_id %}
+                    <input type="hidden" class="hidden" name="deal_owner_id" value="{{deal_owner_id}}" />
+                    <div class="alert alert-info">
+                        <h5>Владелец сделки: {{ deal_owner_data['fullname']}} (<a href="mailto://{{deal_owner_data['email']}}">{{deal_owner_data['email']}}</a>)</h5>
+                    </div>
+                    {% endif %}
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <h4>Данные клиента</h4>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12 col-sm-4">
+                            {{ deal_input('surname', 'Фамилия', true, "text", current_deal['surname']) }}
+                        </div>
+                        <div class="col-xs-12 col-sm-4">
+                            {{ deal_input('name', 'Имя', true, "text", current_deal['name']) }}
+                        </div>
+                        <div class="col-xs-12 col-sm-4">
+                            {{ deal_input('father_name', 'Отчество', false, "text", current_deal['father_name']) }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12 col-sm-6">
+                            {{ deal_input('phone', 'Телефон', true, "tel", current_deal['phone']) }}
+                        </div>
+                        <div class="col-xs-12 col-sm-6">
+                            {{ deal_input('email', 'E-mail', true, "email", current_deal['client_email']) }}
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <h4>Данные сделки</h4>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-6 col-sm-3">
+                            {{ deal_input('square_m', 'Площадь', true, 'number', current_deal['square_m']) }}
+                        </div>
+                        <div class="col-xs-6 col-sm-3">
+                            {{ deal_input('rooms_number', 'Кол-во комнат', true, 'number', current_deal['rooms_number']) }}
+                        </div>
+                        <div class="col-xs-6 col-sm-3">
+                            {{ deal_input('commission', 'Комиссия', true, "number", current_deal['commission']) }}
+                        </div>
+                        <div class="col-xs-6 col-sm-3">
+                            {{ deal_input('date', 'Срок сдачи', true, "date", current_deal['date']) }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            {{ deal_input('address', 'Адрес объекта', true, "text", current_deal['address']) }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            {{ deal_input('commentary', 'Комментарии', "", 'textarea', current_deal['commentary']) }}
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Назад</button>
+                        <button type="submit" class="btn btn-success" id="btn-submit-edits">Сохранить</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

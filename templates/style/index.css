@@ -1,0 +1,178 @@
+#top {
+    margin-bottom: 5px;
+}
+
+/* #top>div:last-child>.row {
+    margin-top:180px;
+}  */
+
+#main-logo {
+    border: 1px solid black;
+}
+
+.row-bottom {
+    position: absolute;
+    bottom: 0;
+    margin-right: 0;
+    width: 100%;
+}
+.row-eq-height {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+/* #top>div:last-child .nav {
+    width: 60%;
+    margin-right: 0px;
+    list-style-type: none;
+}  */
+
+#btn-new-deal {
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    position: fixed;
+    bottom: 24px;
+    left: 24px;
+    z-index: 100;
+    width: auto;
+}
+
+textarea {
+    overflow-x: hidden;
+}
+
+.btn-caret-up>.caret {
+    border-top-width: 0;
+    border-bottom: 4px solid #fff;
+}
+
+.btn-group-vertical.btn-dropdown-group {
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+.btn-group-vertical.btn-dropdown-group>a.btn {
+    border-left-width: 10px;
+}
+
+.btn-group-vertical.btn-dropdown-group>a.btn:first-child, 
+.btn-group-vertical.btn-dropdown-group>a.btn:last-child {
+    border-radius: 0%;
+}
+
+
+.btn-group-vertical.btn-dropdown-group {
+    display:none;
+}
+
+/* pointer core class */
+
+.pntr {
+    width: auto;
+    height: 80px;
+    position: relative;
+    /* margin-right: 20px; */
+    background-color: #f5f5f5;
+}
+.pntr:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 0;
+    border-left: 15px solid white;
+    border-top: 40px solid transparent;
+    border-bottom: 40px solid transparent;
+}
+.pntr:before {
+    content: "";
+    position: absolute;
+    right: -15px;
+    bottom: 0;
+    width: 0;
+    height: 0;
+    border-left: 15px solid #f5f5f5;
+    border-top: 40px solid transparent;
+    border-bottom: 40px solid transparent;
+}
+.pntr.pntr-responsive:hover {
+    background: #dcdcdc;
+}
+.pntr.pntr-responsive:hover:before {
+    border-left: 15px solid #dcdcdc;    
+}
+.pntr.pntr-responsive:active {
+    background: #c2c2c2;
+}
+.pntr.pntr-responsive:active:before {
+    border-left: 15px solid #c2c2c2;    
+}
+
+/* pointer green color scheme */
+.pntr.pntr-success {
+    background: #5cb85c;
+}
+.pntr.pntr-success:before {
+    border-left: 15px solid #5cb85c;
+}
+.pntr.pntr-responsive.pntr-success:hover {
+    background: #449d44;
+}
+.pntr.pntr-responsive.pntr-success:hover:before {
+    border-left: 15px solid #449d44;    
+}
+.pntr.pntr-responsive.pntr-success:active {
+    background: #357935;
+}
+.pntr.pntr-responsive.pntr-success:active:before {
+    border-left: 15px solid #357935;    
+}
+
+/* override for Bootstrap row class to make the pointers fit it */
+.pntr-row {
+    margin-right: 0px;
+}
+
+/* Panel tabs */
+.panel-tabs {
+    position: relative;
+    bottom: 30px;
+    clear: both;
+    border-bottom: 1px solid transparent;
+}
+
+.panel-tabs > li {
+    float: left;
+    margin-bottom: -1px;
+}
+
+.panel-tabs > li > a {
+    margin-right: 2px;
+    margin-top: 4px;
+    line-height: .85;
+    border: 1px solid transparent;
+    border-radius: 4px 4px 0 0;
+    color: #000;
+}
+
+.panel-tabs > li > a:hover {
+    border-color: transparent;
+    color: #000;
+    background-color: transparent;
+}
+
+.panel-tabs > li.active > a,
+.panel-tabs > li.active > a:hover,
+.panel-tabs > li.active > a:focus {
+    color: #000;
+    cursor: default;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    background-color: rgba(255,255,255, .23);
+    border-bottom-color: transparent;
+}
