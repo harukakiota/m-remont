@@ -25,7 +25,7 @@ CREATE TABLE user (
 	phone VARCHAR(30),
 	type ENUM('user','admin','superadmin') NOT NULL DEFAULT 'user',
 	active BOOLEAN NOT NULL DEFAULT FALSE,
-	token VARCHAR(64) DEFAULT NULL,
+	token VARCHAR(64) DEFAULT NULL
 );
 
 CREATE TABLE deal (
